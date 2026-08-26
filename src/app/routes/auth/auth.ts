@@ -1,12 +1,13 @@
 import { expressjwt as jwt } from 'express-jwt';
 import * as express from 'express';
 
-const getTokenFromHeaders = (req: express.Request): string | null => {
-  if (
-    (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Token') ||
-    (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer')
-  ) {
-    return req.headers.authorization.split(' ')[1];
+export const getTokenFromHeaders = (req: express.Request): string | null => {
+  const authorization = req.headers.authorization;
+  if (!authorization) return null;
+
+  const [scheme, token] = authorization.split(' ');
+  if (['token', 'bearer', 'x-token'].includes(scheme?.toLowerCase()) && token) {
+    return token;
   }
   return null;
 };
