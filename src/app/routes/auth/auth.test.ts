@@ -32,4 +32,30 @@ describe('getTokenFromHeaders', () => {
     const req = makeRequest();
     expect(getTokenFromHeaders(req)).toBeNull();
   });
+
+  test('returns the JWT string for lowercase token scheme', () => {
+    const req = makeRequest('token eyJhbGciOiJIUzI1NiJ9.payload.sig');
+    expect(getTokenFromHeaders(req)).toBe('eyJhbGciOiJIUzI1NiJ9.payload.sig');
+  });
+
+  test('returns the JWT string for lowercase bearer scheme', () => {
+    const req = makeRequest('bearer eyJhbGciOiJIUzI1NiJ9.payload.sig');
+    expect(getTokenFromHeaders(req)).toBe('eyJhbGciOiJIUzI1NiJ9.payload.sig');
+  });
+
+  test('returns the JWT string for lowercase x-token scheme', () => {
+    const req = makeRequest('x-token eyJhbGciOiJIUzI1NiJ9.payload.sig');
+    expect(getTokenFromHeaders(req)).toBe('eyJhbGciOiJIUzI1NiJ9.payload.sig');
+  });
+
+  test('returns the JWT string for mixed case schemes', () => {
+    const req1 = makeRequest('BEARER eyJhbGciOiJIUzI1NiJ9.payload.sig');
+    expect(getTokenFromHeaders(req1)).toBe('eyJhbGciOiJIUzI1NiJ9.payload.sig');
+
+    const req2 = makeRequest('X-TOKEN eyJhbGciOiJIUzI1NiJ9.payload.sig');
+    expect(getTokenFromHeaders(req2)).toBe('eyJhbGciOiJIUzI1NiJ9.payload.sig');
+
+    const req3 = makeRequest('ToKeN eyJhbGciOiJIUzI1NiJ9.payload.sig');
+    expect(getTokenFromHeaders(req3)).toBe('eyJhbGciOiJIUzI1NiJ9.payload.sig');
+  });
 });

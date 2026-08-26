@@ -6,7 +6,7 @@ export const getTokenFromHeaders = (req: express.Request): string | null => {
   if (!authorization) return null;
 
   const [scheme, token] = authorization.split(' ');
-  if (['Token', 'Bearer', 'X-Token'].includes(scheme) && token) {
+  if (['token', 'bearer', 'x-token'].includes(scheme?.toLowerCase()) && token) {
     return token;
   }
   return null;
