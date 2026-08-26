@@ -54,6 +54,14 @@ Run the following command to run the project:
 npx nx serve api
 ```
 
+### Dev script
+
+For development, use `npm start` to start the development server with watch mode enabled:
+
+```shell
+npm start
+```
+
 ### Seed the database
 
 The project includes a seed script to populate the database:
