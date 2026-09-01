@@ -1,0 +1,3 @@
+# Login Route Documentation
+
+The login route, implemented in `src/app/routes/auth/auth.controller.ts`, handles user authentication by accepting email and password credentials via a POST request to `/users/login`. The route validates that both email and password are provided, queries the database for a user matching the provided email, and uses bcrypt to verify the password against the stored hash. Upon successful authentication, the route returns a `200 OK` response containing the user's profile information (email, username, bio, image) along with a JWT token for subsequent authenticated requests. If the email is not found or the password does not match, the route returns a `403 Forbidden` response (HTTP status code 403) with an "email or password is invalid" message.
