@@ -21,11 +21,13 @@ router.post('/users', async (req: Request, res: Response, next: NextFunction) =>
 });
 
 /**
- * Login
- * @auth none
- * @route {POST} /users/login
- * @bodyparam user User
- * @returns user User
+ * POST /api/users/login
+ * @summary Authenticate a user and return a signed JWT.
+ * @auth none - public endpoint, no token required
+ * @body {{ user: { email: string, password: string } }}
+ * @returns {200} { user } - authenticated user object (includes JWT token)
+ * @throws Forwards any service-layer errors to Express error middleware via next(error)
+ * @see src/app/routes/auth/auth.service.ts#login
  */
 router.post('/users/login', async (req: Request, res: Response, next: NextFunction) => {
   try {
