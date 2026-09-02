@@ -21,11 +21,16 @@ router.post('/users', async (req: Request, res: Response, next: NextFunction) =>
 });
 
 /**
- * Login
- * @auth none
- * @route {POST} /users/login
- * @bodyparam user User
- * @returns user User
+ * @route   POST /api/users/login
+ * @desc    Authenticate a user and return a JWT token
+ * @auth    none
+ *
+ * @body    {Object}  user
+ * @body    {string}  user.email     - The user's email address
+ * @body    {string}  user.password  - The user's plaintext password
+ *
+ * @returns {200} { user: { email, token, username, bio, image } }
+ * @returns {422} Unprocessable Entity – invalid credentials or missing fields
  */
 router.post('/users/login', async (req: Request, res: Response, next: NextFunction) => {
   try {
